@@ -6,6 +6,15 @@ typedef struct dato {
 	char* name;
 }dato;
 
+typedef struct nodo {
+	dato info;
+	struct nodo *sig;
+
+}nodoL;
+
+int cant_var = 0; // cantidad de variables insertada en la tabla de simbolos
+
+typedef nodoL* lista;
 //typedef struct dato info_var;
 
 int insertar(nodoL* head, char* var, int valor);
