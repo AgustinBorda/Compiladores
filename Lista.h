@@ -17,12 +17,12 @@ int cant_var = 0; // cantidad de variables insertada en la tabla de simbolos
 typedef nodoL* lista;
 //typedef struct dato info_var;
 
-int insertar(nodoL* head, char* var, int valor);
+int insertar(lista *head, char* var, int valor);
 
-int existe(nodoL* head, char* var);
+int existe(lista *head, char* var);
 
-int buscar_valor(nodoL* head, char* var);
+int buscar_valor(lista head, char* var);
 
-struct date* loadVar(char* cadena, int valor);
+//struct date* loadVar(char* cadena, int valor);
 
 #endif
