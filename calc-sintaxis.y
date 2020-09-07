@@ -27,7 +27,7 @@ prog: line {printf("line alone\n");}
     ;
                     
 
-declaration :  VAR  ID '=' expr {  $$ = loadVar($2,$4) ;  }
+declaration :  VAR  ID '=' expr {  $$ = loadVar($2,$4); printf("assigned value: %d\n",$4);  }
              
              | VAR ID { $$ = loadVar($2,0);};             
                                   
@@ -55,6 +55,8 @@ expr: INT               { $$ = $1;
     | '(' expr ')'      { $$ =  $2; }
 
     | ID		{ printf("variable usada");}
+
+    | ID '=' expr    	{loadVar($1,$3); $$ = $3;}
     ;
  
 %%
