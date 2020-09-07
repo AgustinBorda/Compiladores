@@ -13,7 +13,6 @@
 
 
 %type<i> expr
-%type<i> expresion
 %type<d> declaration
 
 %left '=' 
@@ -22,21 +21,21 @@
  
 %%
  
-prog: expresion ;
-    | declaration ';' prog  { printf( "Variable: %s\n", $1 -> name );
-                          printf( "Valor: %d\n", $1 -> value );  };
-    | {};
+prog: line {printf("line alone\n");}
+    | line ';' prog  { printf( "prog after line\n");  }
+    | {}
+    ;
                     
 
-declaration :  VAR  ID '=' expr {  $$ = loadVar($2,$4) ;  };
+declaration :  VAR  ID '=' expr {  $$ = loadVar($2,$4) ;  }
              
              | VAR ID { $$ = loadVar($2,0);};             
                                   
                               
+line: declaration {printf("declaration\n");}
+    | expr {printf("expression\n");};
 
-expresion :expresion expr  ';'     { printf("%s%d\n", "Resultado: ",$2);  };
                                    
-          | {};
   
 expr: INT               { $$ = $1; 
                            printf("%s%d\n","Constante entera:",$1);
@@ -54,6 +53,8 @@ expr: INT               { $$ = $1;
                           // printf("%s,%d,%d,%d\n","Operador Division\n",$1,$3,$1/$3);  
                         }                                                                                                        
     | '(' expr ')'      { $$ =  $2; }
+
+    | ID		{ printf("variable usada");}
     ;
  
 %%
