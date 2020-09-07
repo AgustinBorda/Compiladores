@@ -19,10 +19,13 @@ typedef nodoL* lista;
 
 int insertar(lista *head, char* var, int valor);
 
-int existe(lista *head, char* var);
+int existe(lista head, char* var);
 
 int buscar_valor(lista head, char* var);
 
+int mostrar(lista head);
+
+void borrar(lista *head, int pos);
 //struct date* loadVar(char* cadena, int valor);
 
 #endif
