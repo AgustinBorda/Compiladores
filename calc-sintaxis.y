@@ -14,15 +14,23 @@
 %token VAR
 
 %type<i> expr
+%type<i> expresion
  
 %left '+' 
 %left '*'
  
 %%
  
-prog: decl_var expr ';'          { printf("%s%d\n", "Resultado: ",$2); } 
+prog: expresion ;
+    | decl_var expr ';' prog           { printf("%s%d\n", "Resultado: ",$2); } 
+    | {}
     ;
   
+expresion :expresion expr  ';'     { printf("%s%d\n", "Resultado: ",$2);  };
+
+          | {};
+
+
 decl_var : VAR ID '=' INT ';' decl_var { if (existe($2)==0) insertar($2, $4);
                                          else  printf("%s%s\n", "Variable redeclarada :",$2);
                                        }
@@ -48,5 +56,11 @@ expr: ID              { if (existe($1)==1) $$ = buscar_valor($1);
     ;
  
 %%
+
+
+
+                        
+
+
 
 
