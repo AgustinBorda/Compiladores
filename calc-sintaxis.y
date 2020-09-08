@@ -1,62 +1,50 @@
 %{
+
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include "Lista.c"
+
+#include "Lista.c" 
+
 %}
  
-%union {struct date* d ; int i; char *s;}  
+%union { int i; char *s; }
  
 %token<i> INT
 %token<s> ID
-%token<s> VAR
-
+%token VAR
 
 %type<i> expr
-%type<d> declaration
-
-%left '=' 
-%left '+' '-' 
-%left '*' '/'
+ 
+%left '+' 
+%left '*'
  
 %%
  
-prog: line {printf("line alone\n");}
-    | line ';' prog  { printf( "prog after line\n");  }
-    | {}
+prog: decl_var expr ';'          { printf("%s%d\n", "Resultado: ",$2); } 
     ;
-                    
-
-declaration :  VAR  ID '=' expr {  $$ = loadVar($2,$4); printf("assigned value: %d\n",$4);  }
-             
-             | VAR ID { $$ = loadVar($2,0);};             
-                                  
-                              
-line: declaration {printf("declaration\n");}
-    | expr {printf("expression\n");};
-
-                                   
   
-expr: INT               { $$ = $1; 
+decl_var : VAR ID '=' INT ';' decl_var { if (existe($2)==0) insertar($2, $4);
+                                         else  printf("%s%s\n", "Variable redeclarada :",$2);
+                                       }
+         |  
+         ;  
+  
+expr: ID              { if (existe($1)==1) $$ = buscar_valor($1);
+                        else{
+                              printf("%s%s\n", "Variable no declarada :",$1);
+                              $$ = 0;
+                            }   
+                       }  
+    |INT               { $$ = $1; 
                            printf("%s%d\n","Constante entera:",$1);
-                        }                    
+                        }
     | expr '+' expr     { $$ = $1 + $3; 
                           // printf("%s,%d,%d,%d\n","Operador Suma\n",$1,$3,$1+$3);
                         }
-    | expr '-' expr     { $$ = $1 - $3; 
-                          // printf("%s,%d,%d,%d\n","Operador Resta\n",$1,$3,$1-$3);  
-                        }
     | expr '*' expr     { $$ = $1 * $3; 
                           // printf("%s,%d,%d,%d\n","Operador Producto\n",$1,$3,$1*$3);  
-                        }                    
-    | expr '/' expr     { $$ = $1 / $3; 
-                          // printf("%s,%d,%d,%d\n","Operador Division\n",$1,$3,$1/$3);  
-                        }                                                                                                        
-    | '(' expr ')'      { $$ =  $2; }
-
-    | ID		{ printf("variable usada");}
-
-    | ID '=' expr    	{loadVar($1,$3); $$ = $3;}
+                        }
+    | '(' expr ')'              { $$ =  $2; }
     ;
  
 %%
