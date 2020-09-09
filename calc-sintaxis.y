@@ -6,10 +6,7 @@
 lista list = NULL;
 
 void notifyError(char* msg, char* var) {
-	printf("1");
-	strcat(msg,": %s\n\0");
-	printf("2");
-	printf(msg,var);
+	printf("%s: %s\n", msg, var);
 	exit(1);
 }
 %}	
