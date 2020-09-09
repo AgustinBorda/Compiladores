@@ -25,7 +25,6 @@ int buscar_valor(nodoL* head, char* var);
 
 int mostrar(nodoL* head);
 
-void borrar(nodoL* head, char* var);
-//struct date* loadVar(char* cadena, int valor);
+void borrar(nodoL** head, char* var);
 
 #endif

@@ -55,16 +55,23 @@ int insertar(nodoL** head, char * var, int valor) {
 }
 
 
-void borrar(nodoL* head, char* var){
-    nodoL* aux = head; //puntero auxiliar al primer nodo
-    int i = 1; 
-    while (aux != NULL && strcmp(aux->info.name, var)){
-    	aux = aux -> sig;	
-    	i++;
-    }	 
-    if(strcmp(aux->info.name, var)) {
-    	free(aux);   //elimino el primer nodo de la memoria
+void borrar(nodoL** head, char* var){
+    nodoL* aux = *head; //puntero auxiliar al primer nodoi
+    nodoL* aux2 = NULL;
+    while (aux != NULL && strcmp(aux->info.name, var)!=0){
+	aux2 = aux;
+    	aux = aux->sig;	
+    }
+    if(aux !=NULL && strcmp(aux->info.name, var)==0) {
+	if(aux2 ==NULL) {
+		*head = aux->sig;
 	}
+	else {
+        	aux2->sig = aux->sig;
+	        free(aux);
+
+	}
+    }
 }
 
 
@@ -85,14 +92,4 @@ int mostrar(nodoL* head) {
 	return 0;
 }
 
-
-
-int main() {
-	nodoL* l = NULL;
-	insertar(&l,"aaa",0);
-	mostrar(l);
-	insertar(&l,"bbb",1);
-	mostrar(l);
-	return 0;
-}
 

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "Lista.c"
-lista list = NULL;
+#include "src/table.c"
+nodoL* symbol_table = NULL;
 
 void notifyError(char* msg, char* var) {
 	printf("%s: %s\n", msg, var);
@@ -33,7 +33,7 @@ prog: line {printf("line alone\n");}
     ;
                     
 
-declaration :  VAR  ID '=' expr {	int ins = insertar(&list,$2,$4);	    
+declaration :  VAR  ID '=' expr {	int ins = insertar(&symbol_table,$2,$4);	    
 	    				if(ins == 0){
 	    					notifyError("Duplicate variable", $2);
    					}	    
@@ -41,7 +41,7 @@ declaration :  VAR  ID '=' expr {	int ins = insertar(&list,$2,$4);
 			}
              
              | VAR ID { 
-			if(insertar(&list,$2,0) == 0) {
+			if(insertar(&symbol_table,$2,0) == 0) {
 				notifyError("Duplicate variable", $2);
 			}
 			printf("assigned variable without value\n");
@@ -71,8 +71,8 @@ expr: INT               { $$ = $1;
     | '(' expr ')'      { $$ =  $2; }
 
     | ID		{
-			if(existe(list,$1) != 0) { 
-				$$ = buscar_valor(list,$1);
+			if(existe(symbol_table,$1) != 0) { 
+				$$ = buscar_valor(symbol_table,$1);
 			}
 			else {
 				notifyError("Undeclared variable", $1);
@@ -80,9 +80,11 @@ expr: INT               { $$ = $1;
 		 }
 
     | ID '=' expr    	{
-			if(existe(list,$1) != 0){
-				borrar(&list,$1);
-				insertar(&list,$1,$3);
+			if(existe(symbol_table,$1) != 0){
+				mostrar(symbol_table);
+				borrar(&symbol_table,$1);
+				insertar(&symbol_table,$1,$3);
+				mostrar(symbol_table);
 			}
 			else {
 				notifyError("undeclared variable",$1);  
