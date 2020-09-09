@@ -1,66 +1,98 @@
 %{
-
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include "Lista.c"
+lista list = NULL;
 
-#include "table.c" 
-
-%}
+void notifyError(char* msg, char* var) {
+	printf("1");
+	strcat(msg,": %s\n\0");
+	printf("2");
+	printf(msg,var);
+	exit(1);
+}
+%}	
  
-%union { int i; char *s; }
+%union {struct date* d ; int i; char *s;}  
  
 %token<i> INT
 %token<s> ID
-%token VAR
+%token<s> VAR
+
 
 %type<i> expr
-%type<i> expresion
- 
-%left '+' 
-%left '*'
+%type<d> declaration
+
+%left '=' 
+%left '+' '-' 
+%left '*' '/'
  
 %%
  
-prog: expresion ;
-    | decl_var expr ';' prog           { printf("%s%d\n", "Resultado: ",$2); } 
+prog: line {printf("line alone\n");}
+    | line ';' prog  { printf( "prog after line\n");  }
     | {}
     ;
+                    
+
+declaration :  VAR  ID '=' expr {	int ins = insertar(&list,$2,$4);	    
+	    				if(ins == 0){
+	    					notifyError("Duplicate variable", $2);
+   					}	    
+	   				printf("assigned value: %d\n",$4);  
+			}
+             
+             | VAR ID { 
+			if(insertar(&list,$2,0) == 0) {
+				notifyError("Duplicate variable", $2);
+			}
+			printf("assigned variable without value\n");
+	     };             
+                                  
+                              
+line: declaration {printf("declaration\n");}
+    | expr {printf("expression\n");};
+
+                                   
   
-expresion :expresion expr  ';'     { printf("%s%d\n", "Resultado: ",$2);  };
-
-          | {};
-
-
-decl_var : VAR ID '=' INT ';' decl_var { if (existe($2)==0) insertar($2, $4);
-                                         else  printf("%s%s\n", "Variable redeclarada :",$2);
-                                       }
-         |  
-         ;  
-  
-expr: ID              { if (existe($1)==1) $$ = buscar_valor($1);
-                        else{
-                              printf("%s%s\n", "Variable no declarada :",$1);
-                              $$ = 0;
-                            }   
-                       }  
-    |INT               { $$ = $1; 
+expr: INT               { $$ = $1; 
                            printf("%s%d\n","Constante entera:",$1);
-                        }
+                        }                    
     | expr '+' expr     { $$ = $1 + $3; 
-                          // printf("%s,%d,%d,%d\n","Operador Suma\n",$1,$3,$1+$3);
+                           printf("%s,%d,%d,%d\n","Operador Suma\n",$1,$3,$1+$3);
+                        }
+    | expr '-' expr     { $$ = $1 - $3; 
+                           printf("%s,%d,%d,%d\n","Operador Resta\n",$1,$3,$1-$3);  
                         }
     | expr '*' expr     { $$ = $1 * $3; 
-                          // printf("%s,%d,%d,%d\n","Operador Producto\n",$1,$3,$1*$3);  
-                        }
-    | '(' expr ')'              { $$ =  $2; }
+                           printf("%s,%d,%d,%d\n","Operador Producto\n",$1,$3,$1*$3);  
+                        }                    
+    | expr '/' expr     { $$ = $1 / $3; 
+                           printf("%s,%d,%d,%d\n","Operador Division\n",$1,$3,$1/$3);  
+                        }                                                                                                        
+    | '(' expr ')'      { $$ =  $2; }
+
+    | ID		{
+			if(existe(list,$1) != 0) { 
+				$$ = buscar_valor(list,$1);
+			}
+			else {
+				notifyError("Undeclared variable", $1);
+			}		
+		 }
+
+    | ID '=' expr    	{
+			if(existe(list,$1) != 0){
+				borrar(&list,$1);
+				insertar(&list,$1,$3);
+			}
+			else {
+				notifyError("undeclared variable",$1);  
+			}
+		}
     ;
  
 %%
-
-
-
-                        
-
-
 
 
