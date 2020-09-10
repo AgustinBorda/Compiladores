@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "src/table.c"
+#include "src/tree.c"
 nodoL* symbol_table = NULL;
 
 void notifyError(char* msg, char* var) {
@@ -11,14 +12,13 @@ void notifyError(char* msg, char* var) {
 }
 %}	
  
-%union {struct date* d ; int i; char *s;}  
+%union {struct date* d ; int i; char *s; struct node *n}  
  
 %token<i> INT
 %token<s> ID
 %token<s> VAR
 
-
-%type<i> expr
+%type<n> expr
 %type<d> declaration
 
 %left '=' 
@@ -33,7 +33,7 @@ prog: line {printf("line alone\n");}
     ;
                     
 
-declaration :  VAR  ID '=' expr {	int ins = insertar(&symbol_table,$2,$4);	    
+declaration :  VAR  ID '=' expr {	int ins = insertar(&symbol_table,$2,$4->info.name);	    
 	    				if(ins == 0){
 	    					notifyError("Duplicate variable", $2);
    					}	    
@@ -49,25 +49,31 @@ declaration :  VAR  ID '=' expr {	int ins = insertar(&symbol_table,$2,$4);
                                   
                               
 line: declaration {printf("declaration\n");}
-    | expr {printf("expression\n");};
+    | expr        {inorden($1->info.name); };
 
                                    
   
-expr: INT               { $$ = $1; 
-                           printf("%s%d\n","Constante entera:",$1);
-                        }                    
-    | expr '+' expr     { $$ = $1 + $3; 
-                           printf("%s,%d,%d,%d\n","Operador Suma\n",$1,$3,$1+$3);
+expr:ID                 { if (existe($1)==1) $$ = load_node( NULL, NULL, 0, ret_valor($1));
+                          else{
+                            printf("%s%s\n", "Variable no declarada :",$1);
+                            $$ = NULL;
+                          }
+                        }  
+    |INT                { $$ = newNodeInt($1);
+                           //show_node(newNodeInt($1));
                         }
-    | expr '-' expr     { $$ = $1 - $3; 
-                           printf("%s,%d,%d,%d\n","Operador Resta\n",$1,$3,$1-$3);  
+    | expr '+' expr     { $$ = load_nodeOP( $1, $3, 2, '+');
+                           //show_node(load_nodeOP( $1, $3, 2, '+'));      
                         }
-    | expr '*' expr     { $$ = $1 * $3; 
-                           printf("%s,%d,%d,%d\n","Operador Producto\n",$1,$3,$1*$3);  
+    | expr '-' expr     { $$ =  load_nodeOP( $1, $3, 2, '-');
+                           //show_node(load_nodeOP( $1, $3, 2, '-'));
+                        }
+    | expr '*' expr     { $$ =  load_nodeOP( $1, $3, 2, '*');
+                           //show_node(load_nodeOP( $1, $3, 2, '*'));
                         }                    
-    | expr '/' expr     { $$ = $1 / $3; 
-                           printf("%s,%d,%d,%d\n","Operador Division\n",$1,$3,$1/$3);  
-                        }                                                                                                        
+    | expr '/' expr     { $$ =  load_nodeOP( $1, $3, 2, '/');
+                           //show_node(load_nodeOP( $1, $3, 2, '/'));
+                        }
     | '(' expr ')'      { $$ =  $2; }
 
     | ID		{

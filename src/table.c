@@ -54,7 +54,6 @@ int insertar(nodoL** head, char * var, int valor) {
 	
 }
 
-
 void borrar(nodoL** head, char* var){
     nodoL* aux = *head; //puntero auxiliar al primer nodoi
     nodoL* aux2 = NULL;
