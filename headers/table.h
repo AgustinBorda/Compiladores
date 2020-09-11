@@ -1,16 +1,8 @@
-#ifndef SYMBOL_TABLE_H
-#define SYMBOL_TABLE_H
+#ifndef _TABLE_H
+#define _TABLE_H
 
-typedef struct dato {	
-	int value;
-	char* name;
-}dato;
 
-typedef struct nodo {
-	dato info;
-	struct nodo *sig;
-
-}nodoL;
+#include "structures.h"
 
 int cant_var = 0; // cantidad de variables insertada en la tabla de simbolos
 

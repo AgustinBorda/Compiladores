@@ -1,17 +1,13 @@
+
+
+#ifndef _TABLE_C
+#define _TABLE_C
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../headers/table.h"
 
 #include <string.h>
-
-/*struct dato* loadVar(char* cadena, int valor) {
-	struct dato* d = malloc(sizeof(dato));
-	d -> name = cadena;
-	d -> value = valor;
-	return d; 
- }*/
-
- 
 
 int buscar_valor(nodoL* head, char* var) {
 	nodoL* aux = head;
@@ -92,3 +88,4 @@ int mostrar(nodoL* head) {
 }
 
 
+#endif

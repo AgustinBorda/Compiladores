@@ -19,17 +19,17 @@ digito [0-9]
  
 									
 {digito}+                     { yylval.i = atoi(yytext);
-                                printf("INT : %d\n",atoi(yytext)); 
+                               //() printf("INT : %d\n",atoi(yytext)); 
                                 return INT;}
 
 "var"						  {	return VAR;}
 
 {letra}({letra}|{digito})*    { yylval.s=(char *) malloc(sizeof(yytext)*yyleng);
                                 strcpy(yylval.s,yytext);
-                                printf("ID : %s\n",yytext);
+                               // printf("ID : %s\n",yytext);
                                 return ID;}
 
-[+*;()-=/]                   {  printf("%s\n",yytext);
+[+*;()-=/]                   {  //printf("%s\n",yytext);
                                   return *yytext;}
 
 .|\n                          ; /* ignore all the rest */

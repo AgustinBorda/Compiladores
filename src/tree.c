@@ -1,3 +1,6 @@
+#ifndef _TREE_C
+#define _TREE_C
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../headers/tree.h"
@@ -49,14 +52,14 @@ void inorden(node* n){
 	}
 
 	if(n -> flag == 0 ) {
-		printf(" |%s =",n->data.name);
-		printf(" %d|->",n->data.value);
+		printf(" |%s = ",n->data.name);
+		printf(" %d|-> ",n->data.value);
 	}
 	if(n -> flag == 1 ) {
-		printf(" %d|->",n->valor);
+		printf(" %d|-> ",n->valor);
 	}
 	if(n -> flag == 2 ) {
-		printf(" %c|->",n->op);
+		printf(" %c|-> ",n->op);
 	}
 	if (n->hd != NULL) {
 	 	inorden(n->hd);
@@ -78,3 +81,5 @@ void show_node(tree n) {
 	}
 
 }
+
+#endif
