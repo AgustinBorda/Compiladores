@@ -63,17 +63,17 @@ expr:
     INT                { $$ = newNodeInt($1);
                            //show_node(newNodeInt($1));
                         }
-    | expr '+' expr     { $$ = load_nodeOP( $1, $3, 2, '+');
-                           //show_node(load_nodeOP( $1, $3, 2, '+'));      
+    | expr '+' expr     { $$ = load_nodeOP( $3, $1, 2, '+');
+                           //show_node(load_nodeOP( $3, $1, 2, '+'));      
                         }
-    | expr '-' expr     { $$ =  load_nodeOP( $1, $3, 2, '-');
-                           //show_node(load_nodeOP( $1, $3, 2, '-'));
+    | expr '-' expr     { $$ =  load_nodeOP( $3, $1, 2, '-');
+                           //show_node(load_nodeOP( $3, $1, 2, '-'));
                         }
-    | expr '*' expr     { $$ =  load_nodeOP( $1, $3, 2, '*');
-                           //show_node(load_nodeOP( $1, $3, 2, '*'));
+    | expr '*' expr     { $$ =  load_nodeOP( $3, $1, 2, '*');
+                           //show_node(load_nodeOP( $3, $1, 2, '*'));
                         }                    
-    | expr '/' expr     { $$ =  load_nodeOP( $1, $3, 2, '/');
-                           //show_node(load_nodeOP( $1, $3, 2, '/'));
+    | expr '/' expr     { $$ =  load_nodeOP( $3, $1, 2, '/');
+                           //show_node(load_nodeOP( $3, $1, 2, '/'));
                         }
     | '(' expr ')'      { $$ =  $2; }
     ;
