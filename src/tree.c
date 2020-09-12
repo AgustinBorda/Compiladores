@@ -40,34 +40,62 @@
  	return cant_nod;
  }
 
-void inorden(node* n){
+void preorden(node* n) {
 	
 	if(n == NULL ) {
 		printf("%s\n", "NULL" );
 	} else {
 	
+	if(n -> flag == 0 ) {
+		printf(" |%s = ", n->data.name);
+		printf(" %d|-> ", n->data.value);
+	}
+	if(n -> flag == 1 ) {
+		printf(" |%d|-> ",n->valor);
+	}
+	if(n -> flag == 2 ) {
+		printf(" |%c|-> ",n->op);
+	}
 
+	if (n->hi != NULL) {
+	 	preorden(n->hi);
+	}
+
+	
+	if (n->hd != NULL) {
+	 	preorden(n->hd);
+	}
+	
+}
+}
+
+void inorden(node* n) {
+	
+	if(n == NULL ) {
+		printf("%s\n", "NULL" );
+	} else {
+	
 	if (n->hi != NULL) {
 	 	inorden(n->hi);
 	}
-
 	if(n -> flag == 0 ) {
-		printf(" |%s = ",n->data.name);
-		printf(" %d|-> ",n->data.value);
+		printf(" |%s = ", n->data.name);
+		printf(" %d|-> ", n->data.value);
 	}
 	if(n -> flag == 1 ) {
-		printf(" %d|-> ",n->valor);
+		printf(" |%d|-> ",n->valor);
 	}
 	if(n -> flag == 2 ) {
-		printf(" %c|-> ",n->op);
+		printf(" |%c|-> ",n->op);
 	}
+
 	if (n->hd != NULL) {
 	 	inorden(n->hd);
 	}
 	
 }
-
 }
+
 void show_node(tree n) {
 	if(n -> flag == 0 ) {
 		printf(" |%s =",n->data.name);

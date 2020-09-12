@@ -15,4 +15,7 @@ node* newNodeInt (int a);
 
 int size();
 
+void preorden(node* n);
+void inorden(node* n);
+
 #endif

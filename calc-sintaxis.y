@@ -28,13 +28,12 @@ void notifyError(char* msg, char* var) {
  
 %%
  
-prog: line {printf("line alone\n");}
-    | line ';' prog  { printf( "\n");  }
+prog: line ';' prog  { printf( "\n");  }
     | {}
     ;
                     
 
-declaration :  VAR  ID '=' expr {	
+declaration :  VAR  ID '=' INT {	
               struct dato d; 
               d.name = $2 ;
               d.value = $4;
@@ -43,37 +42,37 @@ declaration :  VAR  ID '=' expr {
 	    				if(ins == 0) {
 	    					notifyError("Duplicate variable", $2);
    					}	    
-	   			//	printf("assigned value: %d\n",$4);  
+	   		  
 			}
              
              | VAR ID { 
 			if(insertar(&symbol_table,$2,0) == 0) {
 				notifyError("Duplicate variable", $2);
 			}
-			//printf("assigned variable without value\n");
+			
 	     };             
                                   
                               
-line: declaration {/*printf("declaration\n")*/;}
-    | expr        {inorden($1); };
+line: declaration {preorden($1);}
+    | expr        {preorden($1);};
 
                                    
   
 expr:
     INT                { $$ = newNodeInt($1);
-                           //show_node(newNodeInt($1));
+                           
                         }
     | expr '+' expr     { $$ = load_nodeOP( $3, $1, 2, '+');
-                           //show_node(load_nodeOP( $3, $1, 2, '+'));      
+                              
                         }
     | expr '-' expr     { $$ =  load_nodeOP( $3, $1, 2, '-');
-                           //show_node(load_nodeOP( $3, $1, 2, '-'));
+                         
                         }
     | expr '*' expr     { $$ =  load_nodeOP( $3, $1, 2, '*');
-                           //show_node(load_nodeOP( $3, $1, 2, '*'));
+                         
                         }                    
     | expr '/' expr     { $$ =  load_nodeOP( $3, $1, 2, '/');
-                           //show_node(load_nodeOP( $3, $1, 2, '/'));
+                          
                         }
     | '(' expr ')'      { $$ =  $2; }
     ;
