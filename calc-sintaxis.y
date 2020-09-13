@@ -35,15 +35,14 @@ prog: line ';' prog  { printf( "\n");  }
 
 declaration :  VAR  ID '=' INT {	
              
-              $$ = "";
-              int ins = insertar(&symbol_table, $2, $4);	    
+              int ins = insertar(&symbol_table, $2, $4);
 	    				if(ins == 0) {
 	    					notifyError("Duplicate variable", $2);
    					}	    
 	   		  
 			}
              
-             | VAR ID { 
+             | VAR ID {
 			if(insertar(&symbol_table,$2,0) == 0) {
 				notifyError("Duplicate variable", $2);
 			}
@@ -66,7 +65,8 @@ expr:
     | ID                {  if (existe(&symbol_table, $1) == 1)  {
                                               struct dato d;
                                               d.name = $1;
-                                              d.value = buscar_valor(&symbol_table, $1);
+                                              d.value = buscar_valor(symbol_table, $1);
+					      printf("valor: %d\n",d.value);
                                               struct type t;
                                               t.var = d;
                                               $$ =  load_node(NULL, NULL, 0, t);
