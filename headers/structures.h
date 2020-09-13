@@ -8,15 +8,22 @@ typedef struct dato {
 	int value;
 	char* name;
 }dato;
+//ESTRUCTURA NODO
+typedef struct type {	
+	int value;
+	char op;
+	struct dato var;
+}type;
 
 //ESTRUCTURA ARBOL
 typedef struct node {
 	struct node* hi;
 	struct node* hd;
 	int flag; // 0 variable , 1 constante , 2 op
-	struct dato data; //var
+	type data;
+	/*struct dato data; //var
 	int valor; //constante
-	char op ;
+	char op ;*/
 }node;
 
 //ESTRUCTURA LISTA

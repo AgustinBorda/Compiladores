@@ -20,7 +20,7 @@ void notifyError(char* msg, char* var) {
 %token<s> VAR
 
 %type<n> expr
-%type<n> declaration
+%type<s> declaration
 
 %left '=' 
 %left '+' '-' 
@@ -34,10 +34,8 @@ prog: line ';' prog  { printf( "\n");  }
                     
 
 declaration :  VAR  ID '=' INT {	
-              struct dato d; 
-              d.name = $2 ;
-              d.value = $4;
-              $$ = load_node(NULL, NULL, 0, d);
+             
+              $$ = "";
               int ins = insertar(&symbol_table, $2, $4);	    
 	    				if(ins == 0) {
 	    					notifyError("Duplicate variable", $2);
@@ -53,25 +51,49 @@ declaration :  VAR  ID '=' INT {
 	     };             
                                   
                               
-line: declaration {preorden($1);}
-    | expr        {preorden($1);};
+line: declaration {}
+    | expr        {inorden($1);};
 
                                    
   
 expr:
-    INT                { $$ = newNodeInt($1);
+    INT                { 
+                          struct type t;
+                           t.value = $1;
+                      $$ = load_node(NULL,NULL,1,t);
                            
                         }
-    | expr '+' expr     { $$ = load_nodeOP( $3, $1, 2, '+');
+    | ID                {  if (existe(&symbol_table, $1) == 1)  {
+                                              struct dato d;
+                                              d.name = $1;
+                                              d.value = buscar_valor(&symbol_table, $1);
+                                              struct type t;
+                                              t.var = d;
+                                              $$ =  load_node(NULL, NULL, 0, t);
+                                              }
+
+                        }                   
+    | expr '+' expr     {   struct type t;
+                            t.op = '+';
+                          $$ = load_node( $3, $1, 2,t);
                               
                         }
-    | expr '-' expr     { $$ =  load_nodeOP( $3, $1, 2, '-');
+    | expr '-' expr     {
+                        struct type t;
+                        t.op = '-'; 
+                        $$ =  load_node( $3, $1, 2, t);
                          
                         }
-    | expr '*' expr     { $$ =  load_nodeOP( $3, $1, 2, '*');
+    | expr '*' expr     {
+                        struct type t;
+                        t.op = '*'; 
+                        $$ =  load_node( $3, $1, 2, t);
                          
                         }                    
-    | expr '/' expr     { $$ =  load_nodeOP( $3, $1, 2, '/');
+    | expr '/' expr     {
+                        struct type t;
+                        t.op = '/'; 
+                        $$ =  load_node( $3, $1, 2, t);
                           
                         }
     | '(' expr ')'      { $$ =  $2; }

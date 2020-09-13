@@ -7,7 +7,9 @@
 
 #include <string.h>
 
- node* load_node( tree nd, tree ni, int f, dato inf) {
+
+
+ node* load_node( tree nd, tree ni, int f, type inf) {
  	node* n = malloc(sizeof(node));
  	n->hi = ni;
 	n->hd = nd;
@@ -16,25 +18,7 @@
 	cant_nod++;
 	return n;
  }
-  node* load_nodeOP( tree nd, tree ni, int f, char op) {
- 	node* n  =  malloc(sizeof(node));
- 	n->hi = ni;
-	n->hd = nd;
-	n-> op = op;
-	n->flag = f;
-	cant_nod++;
-	return n;
- }
-
- node* newNodeInt (int a) {
- 	node* n = malloc(sizeof(node));  
- 	n -> hd = NULL;
- 	n -> hi = NULL;
- 	n -> flag = 1; 
- 	n -> valor = a; 
- 	cant_nod++;
- 	return n ;
- }
+ 
 
  int size() {
  	return cant_nod;
@@ -47,16 +31,15 @@ void preorden(node* n) {
 	} else {
 	
 	if(n -> flag == 0 ) {
-		printf(" |%s = ", n->data.name);
-		printf(" %d|-> ", n->data.value);
+		printf(" |%s = ", n->data.var.name);
+		printf(" %d|-> ", n->data.var.value);
 	}
 	if(n -> flag == 1 ) {
-		printf(" |%d|-> ",n->valor);
+		printf(" |%d|-> ",n->data.value);
 	}
 	if(n -> flag == 2 ) {
-		printf(" |%c|-> ",n->op);
+		printf(" |%c|-> ",n->data.op);
 	}
-
 	if (n->hi != NULL) {
 	 	preorden(n->hi);
 	}
@@ -79,14 +62,14 @@ void inorden(node* n) {
 	 	inorden(n->hi);
 	}
 	if(n -> flag == 0 ) {
-		printf(" |%s = ", n->data.name);
-		printf(" %d|-> ", n->data.value);
+		printf(" |%s = ", n->data.var.name);
+		printf(" %d|-> ", n->data.var.value);
 	}
 	if(n -> flag == 1 ) {
-		printf(" |%d|-> ",n->valor);
+		printf(" |%d|-> ",n->data.value);
 	}
 	if(n -> flag == 2 ) {
-		printf(" |%c|-> ",n->op);
+		printf(" |%c|-> ",n->data.op);
 	}
 
 	if (n->hd != NULL) {
@@ -96,18 +79,6 @@ void inorden(node* n) {
 }
 }
 
-void show_node(tree n) {
-	if(n -> flag == 0 ) {
-		printf(" |%s =",n->data.name);
-		printf(" %d|->",n->data.value);
-	}
-	if(n -> flag == 1 ) {
-		printf(" %d|->",n->valor);
-	}
-	if(n -> flag == 2 ) {
-		printf(" %c|->",n->op);
-	}
 
-}
 
 #endif
