@@ -5,7 +5,8 @@
 #include "src/table.c"
 #include "src/tree.c"
 #include "interprete/interprete.c"
-
+#include "src/assembly.c"
+tree t = NULL;
 nodoL* symbol_table = NULL;
 
 void notifyError(char* msg, char* var) {
@@ -53,7 +54,13 @@ declaration :  VAR  ID '=' INT {
                                   
                               
 line: declaration {}
-    | expr        {printf("resultado: %d\n",eval($1));};
+    | expr        {t = $1;
+                    inorden($1);
+                    if(open_file(t) == 0) {
+                     printf("file");
+                    }
+                      
+                  };
 
                                    
   
