@@ -1276,7 +1276,7 @@ yyreduce:
     {t = (yyvsp[0].n);
                     printf("resultado: %d\n",eval((yyvsp[0].n),symbol_table));
                     if(open_file(t) == 0) {
-                     printf("file");
+                     printf("Ensamblado\n");
                     }
                       
                   }

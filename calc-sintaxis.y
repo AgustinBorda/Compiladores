@@ -57,7 +57,7 @@ line: declaration {}
     | expr        {t = $1;
                     printf("resultado: %d\n",eval($1,symbol_table));
                     if(open_file(t) == 0) {
-                     printf("file");
+                     printf("Ensamblado\n");
                     }
                       
                   };
