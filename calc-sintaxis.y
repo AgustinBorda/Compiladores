@@ -29,7 +29,8 @@ void notifyError(char* msg, char* var) {
  
 %%
  
-prog: line ';' prog  { printf( "\n");  }
+prog: line ';' prog  {}
+    | line {}
     | {}
     ;
                     
