@@ -55,7 +55,7 @@ declaration :  VAR  ID '=' INT {
                               
 line: declaration {}
     | expr        {t = $1;
-                    inorden($1);
+                    printf("resultado: %d\n",eval($1,symbol_table));
                     if(open_file(t) == 0) {
                      printf("file");
                     }
@@ -71,14 +71,14 @@ expr:
                       $$ = load_node(NULL,NULL,1,t);
                            
                         }
-    | ID                {  if (existe(&symbol_table, $1) == 1)  {
+    | ID                { 
                                               struct dato d;
                                               d.name = $1;
-                                              d.value = buscar_valor(symbol_table, $1);
+                                              //d.value = buscar_valor(symbol_table, $1);
                                               struct type t;
                                               t.var = d;
                                               $$ =  load_node(NULL, NULL, 0, t);
-                                              }
+                                              
 
                         }                   
     | expr '+' expr     {   struct type t;

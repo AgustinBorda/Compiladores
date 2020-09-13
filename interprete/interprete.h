@@ -2,11 +2,11 @@
 
 void semError();
 
-int eval(node* root);
+int eval(node* root, nodoL* sym_table);
 
 int getValueConstant(node* root);
 
-int getValueId(node* root);
+int getValueId(node* root, nodoL* sym_table);
 
-int getValueOp(node* root);
+int getValueOp(node* root, nodoL* sym_table);
 
