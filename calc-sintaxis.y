@@ -4,6 +4,7 @@
 #include <string.h>
 #include "src/table.c"
 #include "src/tree.c"
+#include "interprete/interprete.c"
 
 nodoL* symbol_table = NULL;
 
@@ -51,7 +52,7 @@ declaration :  VAR  ID '=' INT {
                                   
                               
 line: declaration {}
-    | expr        {inorden($1);};
+    | expr        {printf("resultado: %d\n",eval($1));};
 
                                    
   
@@ -66,7 +67,6 @@ expr:
                                               struct dato d;
                                               d.name = $1;
                                               d.value = buscar_valor(symbol_table, $1);
-					      printf("valor: %d\n",d.value);
                                               struct type t;
                                               t.var = d;
                                               $$ =  load_node(NULL, NULL, 0, t);
