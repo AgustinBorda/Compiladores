@@ -1,5 +1,5 @@
 var a = 4;
 var b = 5;
-a * b + 2 + cacatua;
+a * b + 2 ;
  
  

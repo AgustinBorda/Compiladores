@@ -74,7 +74,7 @@ expr:
     | ID                { 
                                               struct dato d;
                                               d.name = $1;
-                                              //d.value = buscar_valor(symbol_table, $1);
+                                              d.value = buscar_valor(symbol_table, $1);
                                               struct type t;
                                               t.var = d;
                                               $$ =  load_node(NULL, NULL, 0, t);

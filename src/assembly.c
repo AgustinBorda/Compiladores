@@ -36,7 +36,17 @@ void write(struct node * root, FILE* f) {
 	}
 	if (root ->flag == 2) {
 		if(root -> data.op == '+') {
-			fprintf(f,"%s\n" ,"ADD ");
+			fprintf(f,"%s\n", "MOV EAX, 0");
+			if(root -> hi -> flag == 0){
+				fprintf(f,"%s%d%s\n" ,"ADD ", root -> hi -> data.var.value, ", EAX");
+			}else{
+				fprintf(f,"%s%d%s\n" ,"ADD ", root -> hi -> data.value, ", EAX");
+			}
+			if(root -> hd -> flag == 0){
+				fprintf(f,"%s%d%s\n" ,"ADD ", root -> hd -> data.var.value, ", EAX");
+			}else{
+				fprintf(f,"%s%d%s\n" ,"ADD ", root -> hd -> data.value, ", EAX");
+			}
 		}
 		if(root -> data.op == '*') {
 			fprintf(f,"%s\n" ,"MUL "); 
