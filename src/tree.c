@@ -48,7 +48,7 @@ void preorden(node* n) {
 	if (n->hd != NULL) {
 	 	preorden(n->hd);
 	}
-	
+	//sdlkjls
 }
 }
 
