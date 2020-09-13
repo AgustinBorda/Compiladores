@@ -33,7 +33,8 @@ int getValueId(node* root, nodoL* sym_table) {
 		return buscar_valor(sym_table, root->data.var.name);
 	}
 	else {
-		char err[20+strlen(root->data.var.name)] = "\0";
+		char err[20+strlen(root->data.var.name)];
+		err[0] = '\0';
 		strcat(err, "Undeclared variable: ");
 	        strcat(err,root->data.var.name);	
 		semError(err);
