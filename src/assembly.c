@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../headers/structures.h"
+int variable = 0;
 
 int open_file(tree head) {
 	FILE* f;
@@ -32,7 +33,8 @@ void dfs(struct node *head,FILE* f) {
 
 void write(struct node * root, FILE* f) {
 	if (root ->flag == 0) {
-		fprintf(f,"%s%d\n" ,"MOV EDX, ", root -> data.var.value);
+		variable = variable + 1 ;
+		fprintf(f,"%s%d%s%d\n" ,"MOV TEMP", variable, ", ", root -> data.var.value);
 	}
 	if (root ->flag == 1) {
 		fprintf(f, "%s%d\n", "MOV ECX, ", root ->data.value);
