@@ -54,9 +54,9 @@ declaration :  VAR  ID '=' INT {
                                   
                               
 line: declaration {}
-    | expr        {t = $1;
-                    printf("resultado: %d\n",eval($1,symbol_table));
-                    if(open_file(t) == 0) {
+    | expr        {
+                    printf("resultado: %d\n",eval($1, symbol_table));
+                    if(assemble($1, symbol_table) == 0) {
                      printf("Ensamblado\n");
                     }
                       
