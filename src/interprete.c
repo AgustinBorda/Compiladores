@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "interprete.h"
-#include "../src/table.c"
+#include "../headers/interprete.h"
+#include "../headers/table.h"
 #include <string.h>
 
 void semError(char* msg) {

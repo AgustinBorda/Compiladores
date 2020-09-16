@@ -1,4 +1,6 @@
-#include "../headers/structures.h"
+#ifndef _INTERPRETER_H
+#define _INTERPRETER_H
+#include "structures.h"
 
 void semError();
 
@@ -10,3 +12,4 @@ int getValueId(node* root, nodoL* sym_table);
 
 int getValueOp(node* root, nodoL* sym_table);
 
+#endif

@@ -3,8 +3,6 @@
 
 #include "structures.h"
 
-int cant_nod = 0; // cantidad de variables insertada en la tabla de simbolos
-
 typedef node* tree;
 
 node* load_node( tree nd, tree ni, int f, type inf);

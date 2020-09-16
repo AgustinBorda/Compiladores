@@ -1,13 +1,10 @@
-#ifndef _TREE_C
-#define _TREE_C
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "../headers/tree.h"
 
 #include <string.h>
 
-
+int cant_nod = 0; // cantidad de variables insertada en la tabla de simbolos
 
  node* load_node( tree nd, tree ni, int f, type inf) {
  	node* n = malloc(sizeof(node));
@@ -80,5 +77,3 @@ void inorden(node* n) {
 }
 
 
-
-#endif

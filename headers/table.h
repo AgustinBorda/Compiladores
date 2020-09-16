@@ -4,7 +4,6 @@
 
 #include "structures.h"
 
-int cant_var = 0; // cantidad de variables insertada en la tabla de simbolos
 
 
 //typedef struct dato info_var;

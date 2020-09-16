@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include "../headers/tempGen.h"
 
 int var = 0;
 

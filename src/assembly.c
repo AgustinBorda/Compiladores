@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../headers/assembly.h"
-#include "table.c"
-#include "tempGen.c"
+#include "../headers/table.h"
+#include "../headers/tempGen.h"
 int assemble(node* head, nodoL* sym_table) {
 	FILE* f;
 	f = fopen("assembly.txt", "w+");

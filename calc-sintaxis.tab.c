@@ -71,10 +71,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "src/table.c"
-#include "src/tree.c"
-#include "interprete/interprete.c"
-#include "src/assembly.c"
+#include "headers/tree.h"
+#include "headers/table.h"
+#include "headers/interprete.h"
+#include "headers/assembly.h"
 tree t = NULL;
 nodoL* symbol_table = NULL;
 
@@ -142,7 +142,7 @@ extern int yydebug;
 union YYSTYPE
 {
 #line 18 "calc-sintaxis.y"
- int i; char *s; struct node *n
+ int i; char *s; struct node *n;
 
 #line 148 "calc-sintaxis.tab.c"
 

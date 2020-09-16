@@ -9,6 +9,8 @@
 
 #include <string.h>
 
+int cant_var = 0; // cantidad de variables insertada en la tabla de simbolos
+
 int buscar_valor(nodoL* head, char* var) {
 	nodoL* aux = head;
 	while (aux != NULL ) {

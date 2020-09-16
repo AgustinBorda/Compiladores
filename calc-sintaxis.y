@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "src/table.c"
-#include "src/tree.c"
-#include "interprete/interprete.c"
-#include "src/assembly.c"
+#include "headers/tree.h"
+#include "headers/table.h"
+#include "headers/interprete.h"
+#include "headers/assembly.h"
 tree t = NULL;
 nodoL* symbol_table = NULL;
 
@@ -15,7 +15,7 @@ void notifyError(char* msg, char* var) {
 }
 %}	
  
-%union { int i; char *s; struct node *n}  
+%union { int i; char *s; struct node *n;}  
  
 %token<i> INT
 %token<s> ID
