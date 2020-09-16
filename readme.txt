@@ -21,7 +21,17 @@
 *) var z = 2 ;
    z + (3 * 2) - 5;
 
+*) var a = 4;
+   var b = 5;
+   a * ((b + 2) - 5) * 6;
 
+*) var a = 10;
+   var b = 2;
+   a / b + 3 - 8;
+
+*) var a = 10;
+   var b = 2;
+   a / ( b + 3 ) - 8;
 
 
  Recuerde los resultados de la expresion se imprimira por pantalla(Interprete),
