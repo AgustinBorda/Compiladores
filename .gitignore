@@ -4,3 +4,6 @@ a.out
 *.tab.h
 script
 *.yy.c
+*.yy.h
+*.tab.c
+assembly.txt
